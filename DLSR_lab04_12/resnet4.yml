@@ -1,0 +1,22 @@
+models:
+  - name: Resnet_4
+  
+    launchers:
+      - framework: dlsdk
+        device: CPU
+        model:   /opt/intel/openvino/deployment_tools/open_model_zoo/tools/accuracy_checker/Resnet_4.xml
+        weights:  /opt/intel/openvino/deployment_tools/open_model_zoo/tools/accuracy_checker/Resnet_4.bin
+        adapter: classification
+        batch: 1
+
+    datasets:
+      - name: food11_dataset
+        data_source: /opt/intel/openvino/deployment_tools/open_model_zoo/tools/accuracy_checker/evaluation
+        annotation_conversion:
+          converter: food11
+          data_dir: /opt/intel/openvino/deployment_tools/open_model_zoo/tools/accuracy_checker/evaluation
+          labels_file: /opt/intel/openvino/deployment_tools/open_model_zoo/tools/accuracy_checker/label_map_food11.txt
+        annotation: food11_eva_annotation.pickle
+        metrics:
+        - type: accuracy
+          top_k: 1
